@@ -1,0 +1,31 @@
+== popshops
+
+Ruby gem for accessing the popshops API (http://www.popshops.com)
+
+== install
+
+  gem install popshops
+
+== example
+
+  require 'rubygems'
+  require 'popshops'
+  
+  popshops = Popshops.new('YOUR_API_KEY')
+  
+  popshops.product_search(:query => {:catalog_key => 'CATALOG_KEY', :keywords => 'books'})
+  popshops.merchant_sarch(:query => {:catalog_key => 'CATALOG_KEY', :merchant_type_id => 12})
+  popshops.merchant_types
+  popshops.networks
+  popshops.deal_search(:query => {:catalog_key => 'CATALOG_KEY', :keywords => 'books'})
+  popshops.deal_types
+  
+== notes
+
+You can pass any valid option from the API documentation (see http://popshops.com/faq/affiliate-xml-api-reference/) inside of the query hash as presented above.
+
+Results will be returned using Hashie (http://github.com/intridea/hashie) so that you can navigate through the api results in a bit more ruby-esque way.
+
+== license
+
+MIT license - see LICENSE for more details.
