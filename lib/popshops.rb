@@ -41,6 +41,11 @@ class Popshops
     Hashie::Mash.new(results['deal_types'])
   end   
   
+  def catalogs
+    results = self.class.get("https://www.popshops.com/v2/#{@api_key}/catalogs/list.xml?private_api_key=#{@private_api_key}")
+    Hashie::Mash.new(results['results']['catalogs'])
+  end
+  
   # Activates merchants for the given catalog.
   #
   # merchants can be either a string, an integer, or an array of ids.
