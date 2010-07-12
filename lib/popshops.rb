@@ -42,12 +42,16 @@ class Popshops
   end   
   
   # Activates merchants for the given catalog.
+  #
+  # merchants can be either a string, an integer, or an array of ids.
   def activate_merchants(catalog_key, merchants)
     results = self.class.post(catalog_update_url(catalog_key, merchants), :query => { :active => 1 })
     Hashie::Mash.new(results['response'])
   end
   
   # Deactivates merchants for the given catalog.
+  #
+  # merchants can be either a string, an integer, or an array of ids.
   def deactivate_merchants(catalog_key, merchants)
     results = self.class.post(catalog_update_url(catalog_key, merchants), :query => { :active => 0 })
     Hashie::Mash.new(results['response'])
@@ -55,6 +59,10 @@ class Popshops
   
   private
     def catalog_update_url(catalog_key, merchants)
-      "https://www.popshops.com/v2/#{@api_key}/catalogs/update.xml?catalog_key=#{catalog_key}&private_api_key=#{@private_api_key}&merchant_id=#{merchants}"
+      "https://www.popshops.com/v2/#{@api_key}/catalogs/update.xml?catalog_key=#{catalog_key}&private_api_key=#{@private_api_key}&merchant_id=#{normalize_merchants(merchants)}"
+    end
+    
+    def normalize_merchants(merchants)
+      merchants.is_a?(Array) ? merchants.join(',') : merchants
     end
 end
