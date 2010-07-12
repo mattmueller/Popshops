@@ -6,8 +6,9 @@ class Popshops
   include HTTParty
   base_uri 'api.popshops.com/v2'
   
-  def initialize(api_key)
+  def initialize(api_key, private_api_key = nil)
     @api_key = api_key
+    @private_api_key = private_api_key
   end
   
   def product_search(options={})
@@ -40,4 +41,20 @@ class Popshops
     Hashie::Mash.new(results['deal_types'])
   end   
   
+  # Activates merchants for the given catalog.
+  def activate_merchants(catalog_key, merchants)
+    results = self.class.post(catalog_update_url(catalog_key, merchants), :query => { :active => 1 })
+    Hashie::Mash.new(results['response'])
+  end
+  
+  # Deactivates merchants for the given catalog.
+  def deactivate_merchants(catalog_key, merchants)
+    results = self.class.post(catalog_update_url(catalog_key, merchants), :query => { :active => 0 })
+    Hashie::Mash.new(results['response'])
+  end
+  
+  private
+    def catalog_update_url(catalog_key, merchants)
+      "https://www.popshops.com/v2/#{@api_key}/catalogs/update.xml?catalog_key=#{catalog_key}&private_api_key=#{@private_api_key}&merchant_id=#{merchants}"
+    end
 end
