@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = %q{popshops}
-  s.version = "1.0.1"
-  s.authors = ["Matt Mueller"]
+  s.version = "1.0.2"
+  s.authors = ["Matt Mueller", "Trey Bean"]
   s.email = %q{muellermr@gmail.com}
   s.homepage = %q{http://github.com/mattmueller/Popshops}
   s.files = ["LICENSE", "README.rdoc", "lib/popshops.rb"]
